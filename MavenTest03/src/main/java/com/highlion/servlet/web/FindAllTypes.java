@@ -26,7 +26,7 @@ public class FindAllTypes extends HttpServlet {
             List<TypeVO>list=bats.findAllTypes();
             //页面显示javascript类型
 	        response.setContentType("text/javascript;charset=utf-8");
-	        String js="var types= [";
+	        String js="[";
 			for (int i=0;i<list.size();i++) {
 				js+="{id:"+list.get(i).getid()+",name:'"+list.get(i).getName()+"'}";
 				if (i<list.size()-1) {
@@ -35,6 +35,6 @@ public class FindAllTypes extends HttpServlet {
 			}
 			js+="]";
 			System.out.println(js);
-			response.getWriter().write(js);
+			response.getWriter().write("fillSel("+js+")");
 	}
 }
