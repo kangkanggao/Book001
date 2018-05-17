@@ -24,9 +24,9 @@ public class FindAllTypes extends HttpServlet {
 			throws ServletException, IOException {
             BookAllTypesService bats=new BooKAllTypesService();
             List<TypeVO>list=bats.findAllTypes();
-            //页面显示javascript类型
-	        response.setContentType("text/javascript;charset=utf-8");
-	        String js="var types= [";
+            response.setCharacterEncoding("utf-8");
+	        response.getWriter().write("<script>");
+			String js="[";
 			for (int i=0;i<list.size();i++) {
 				js+="{id:"+list.get(i).getid()+",name:'"+list.get(i).getName()+"'}";
 				if (i<list.size()-1) {
@@ -34,7 +34,8 @@ public class FindAllTypes extends HttpServlet {
 				}
 			}
 			js+="]";
-			System.out.println(js);
-			response.getWriter().write(js);
+			//fillSel在父窗口定义，要告诉到父窗口找
+			response.getWriter().write("window.parent.fillSel("+js+");");
+			response.getWriter().write("</script>");
 	}
 }
